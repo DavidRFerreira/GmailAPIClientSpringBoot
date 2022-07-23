@@ -2,7 +2,7 @@
 
 This repository includes the source code for an API built with Java Spring Boot that makes use of the Gmail API in order to send emails with an attachment.
 
-The present source code and the tutorial demonstrates how to use the Gmail API with an OAuth Credential and by needing a single-time authorization by the gmail account owner from where the emails are going to be sent (in other words, by using google's refresh token). 
+This tutorial presents how to use the Gmail API with an OAuth Credential requiring a single time authorization action by the sender gmail account owner (using google's refresh token). This means that the sender does not need to login or authorize the API everytime we need to send an email.
 
 
 ## You will learn how to 
@@ -26,13 +26,27 @@ All these three cases have in common the fact that the emails are going to be se
 
 This could be achieved with the many SMTP providers available but the majority of them requires a more complex setting of a SMTP server in your own application's server. By using the Gmail API we are not require to set and mantain any SMTP server.
 
-
 The source code on this repository shows an API with a single endpoint to submit a contact form with a subject, a description and a file. Then, an email is sent from a previously defined gmail account containing that subject, description and the file as an attachment. The recipient address in this example is also defined in the environment's variable but it can be defined at runtime (for example, an email address specified by the user on the API request).
 
 ## Tutorial
 
 ### Creating OAuth Credential and Refresh Token for Gmail Account
 
-### Adding Environment Variables in IntelliJ
+For a step-by-step tutorial on how to create a Google Cloud project and how to create an OAuth Credential and a refresh token for the sender Gmail account refer to this [documentation](./docs/credentials.md).
+
+### Adding Credentials as Environment Variables in IntelliJ
+
+This source code on this stores the *Google Client Id*, *Google Client Secret*, *sender account's Gmail Refresh Token*, *sender email address* and *recipient email address* in the environment variables. 
+
+So, in order to build and test the demo code you need to create your own credentials and tokens an save it on your IDE's environment variables (or for testing purposes, replace them directly in the application.yaml file).
+
+The environment variables should be in the form of
+
+```
+GOOGLE_CLIENT_ID=XXXXXXX;GOOGLE_CLIENT_SECRET=XXXXXXX;GOOGLE_REFRESH_TOKEN=XXXXXXX;GOOGLE_FROM_EMAIL=XXXXXXX;GOOGLE_TO_EMAIL=XXXXXXX
+```
+
+But depending on the use case, the recipient email address *(TO_EMAIL)* can be specified during run-time having no need to store it on the environment variables. 
+
 
 ### Implementation
