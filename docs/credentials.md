@@ -14,21 +14,21 @@ We know explain how to achieve both things step-by-step.
 3. Press the "Select a project" button on the top tab and then press the "New Project" button on the pop-up.
 4. Fill the form with the name of your project and the name of your organization (if it exists) and then press "Create" button.
 
-![screenshot1](docs/01_doc_image.png)
+![screenshot1](./images/01_doc_image.png)
 
 5. After creating the project, on the main menu press the "APIs and services" option.
 6. Press "Enabled APIs and services" on the left-side menu.
 7. Press "Enable APIs and Services" button on the top part of the screen.
 
-![screenshot2](docs/02_doc_image.png)
+![screenshot2](./images/02_doc_image.png)
 
 8. Search for "Gmail API" and press on the correct option.
 
-![screenshot3](docs/03_doc_image.png)
+![screenshot3](./images/03_doc_image.png)
 
 9. Press on "Enable" button to enable the Gmail API in your project.
 
-![screenshot4](docs/04_doc_image.png)
+![screenshot4](./images/04_doc_image.png)
 
 
 You have created a project in Google Cloud and enabled the Gmail API for that project.
@@ -40,24 +40,24 @@ Still on [Google Cloud console](https://console.cloud.google.com/) on your brows
 
 10. On the left-side menu press "OAuth Consent Screen".
 11. You can select "Internal" if you are a part of an organization or "External" if not. Then press "Create" button.
-![screenshot5](docs/05_doc_image.png)
+![screenshot5](./images/05_doc_image.png)
 
 12. Fill the form with your application's information and then press "Save and Continue" (only the first form screen is important). 
 
-![screenshot6](docs/06_doc_image.png)
-![screenshot7](docs/07_doc_image.png)
+![screenshot6](./images/06_doc_image.png)
+![screenshot7](./images/07_doc_image.png)
 
 13. If on step 2) you have selected "External", on "OAuth Consent screen" press "Add Users" in "Test Users" section. On the pop-up, add the email address from where you want to send emails. 
 
-![screenshot9](docs/09_doc_image.png)
+![screenshot9](./images/09_doc_image.png)
 
 14. Press "Credentials" on the right-side menu, then press "Create Credentials" and then "OAuth client ID". 
 
-![screenshot8](docs/08_doc_image.png)
+![screenshot8](./images/08_doc_image.png)
 
 15. On "Create OAuth client ID" form fill the information. Don't forget to add *https://developers.google.com/oauthplayground/* to "Authorised redirect URIs".
 
-![screenshot10](docs/10_doc_image.png)
+![screenshot10](./images/10_doc_image.png)
 
 On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is created with an associated **Client ID** and **Client Secret**. Your application is going to need them in order to access Google's APIs.
 
@@ -69,7 +69,7 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
 18. On the "Settings" icon in the top-right corner select the "Use your own OAuth Credentials" box. Then add the OAuth Client Id and OAuth Client secret you received on step 15). 
 19. Press "Authorize APIs" button.
 
-![screenshot11](docs/11_doc_image.png)
+![screenshot11](./images/11_doc_image.png)
 
 20. You'll be asked to select an Gmail account and to give permission for the selected actions of Gmail APIs. Accept it.
 
@@ -79,7 +79,7 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
 
 23. It will generate automatically a refresh and access token. 
  
- ![screenshot12](docs/12_doc_image.png)
+ ![screenshot12](./images/12_doc_image.png)
 
 The **Refresh Token** is very important. It will allow the application to ask for a valid access token everytime it needs to send an email. This way the sender account's owner doesn't need to perform any action from now on in order to accept or login to his account. This is done in the background through an API request to retrieve an access token from the refresh token.
 The Refresh Token is going to be valid forever unless the account owner removes Google's API permission to access his account.
