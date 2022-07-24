@@ -50,3 +50,152 @@ But depending on the use case, the recipient email address *(TO_EMAIL)* can be s
 
 
 ### Implementation
+
+The source code contains an *POST* endpoint in order to submit a subject (*String*), description (*String*) and a file (*MultipartFile*). When the endpoint is called, it triggers the Gmail API service to send an email from and to a specified emails address, sending the file as an attachment.
+
+On this section, some important parts of the implementation are addressed. Please, keep in mind that the code snippets presented are not completed (consult the source code for the complete version).
+
+
+#### Create OAuth Credential through token refresh
+
+In order to create a Gmail service instance you need an OAuth credential and the sender Gmail's access token to authenticate your application and your account, respectively, with the Gmail API. 
+
+```java
+Credential credential = authorize();
+
+return new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
+    .build();
+```
+
+This *Credential* object can be built in different ways according to the required behaviour and use case. 
+
+In the available demo, the goal is to not require the sender account owner to perform any action in order for the the application to be able to use his gmail to send emails. The only action needed from him is a single-time authorization in order to retrieve a *refresh token* that is stored by the application (please, read this [documentation](./docs/credentials.md)).
+
+To build a *Credential* object from an *access token* you can use the response that you get from requesting the *access token* from the *refresh token* using a POST request to *https://www.googleapis.com/oauth2/v4/token* google's endpoint. 
+
+
+```java
+GmailCredential gmailCredentialsDto = new GmailCredential(
+      clientId,
+      secretKey,
+      refreshToken,
+      "refresh_token",
+      null,
+      null
+    );
+
+HttpEntity<GmailCredential> entity = new HttpEntity(gmailCredentialsDto);
+
+GoogleTokenResponse tokenResponse = restTemplate.postForObject(
+    "https://www.googleapis.com/oauth2/v4/token",
+    entity,
+    GoogleTokenResponse.class);
+
+```
+
+This *tokenResponse* can then be used to create a Credential object.
+
+```java
+return new Credential(BearerToken.authorizationHeaderAccessMethod()).setFromTokenResponse(
+    tokenResponse);
+```
+
+This is how you can make sure you always have a valid access token and how you can authenticate the account in order to send emails without requiring account owner action.
+
+##### Alternative ways to create Credential object.
+
+**Alternative 1**
+
+On the other hand, if you want the sender account owner to login / accept API use everytime you want to send an email you can build *Credential* object through [GoogleAuthorizationCodeFlow](https://cloud.google.com/java/docs/reference/google-api-client/latest/com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow).
+
+With this code, an url is automatically returned that takes the user to the Google Account login prompt. After the user logins and authorizes the API use, it returns the *access token*. This is a possible approach where you want to send emails from your application user's own Gmail account (and not from a well and previously specified account address). 
+
+```java
+InputStream in = new FileInputStream("credentials.json");
+
+GoogleClientSecrets clientSecrets =
+  GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+
+GoogleAuthorizationCodeFlow flow =
+  new GoogleAuthorizationCodeFlow.Builder(
+    httpTransport, JSON_FACTORY, clientSecrets, Collections.singletonList(GmailScopes.MAIL_GOOGLE_COM))
+    .setAccessType("offline")
+    .build();
+
+LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+
+Credential credential = new AuthorizationCodeInstalledApp(
+  flow, receiver).authorize("user");
+```
+
+Please, note that in this example we are loading *OAuth Client ID* and *OAuth Client Secret* from a *"credentials.json* file and not from the environment variables. It works both ways. 
+
+With this approach you don't need to use Google OAuth Playground in order to retrieve a refresh token (since it is retrieved in real-time) but you still need a *OAuth Client ID* and *OAuth Client Secret* to authenticate your application.
+
+
+**Alternative 2**
+
+You can also send emails from a [Google Service Account](https://cloud.google.com/iam/docs/service-accounts).
+
+```java
+ServiceAccountCredentials serviceAccountCredentials = ServiceAccountCredentials.fromPkcs8(
+    clientId,
+    senderEmail,
+    serviceAccountKey,
+    serviceAccountId,
+    GmailScopes.all());
+
+GoogleCredentials delegatedCredentials = serviceAccountCredentials.createDelegated(delegatedUserEmail);
+
+HttpRequestInitializer requestInitializer = new HttpCredentialsAdapter(delegatedCredentials);
+```
+
+**Alternative 3**
+
+In the past, you could use the [GoogleCredential](https://javadoc.io/doc/com.google.api-client/google-api-client/1.33.2/com/google/api/client/googleapis/auth/oauth2/GoogleCredential.html) class in order to create the Credential object. This class is now deprecated and, therefore, should not be used anymore.
+
+```java
+Credential credential = new GoogleCredential().Builder()
+  .setTransport(httpTransport)
+  .setJsonFactory(JSON_FACTORY)
+  .setClientSecrets(gmailCredentials.client_id(), gmailCredentials.client_secret())
+  .build()
+  .setAccessToken(gmailCredentials.access_token())
+  .setRefreshToken(gmailCredentials.refresh_token());
+```
+
+
+#### Add a Java MultipartFile object as an email attachment. 
+
+In the provided example, the API received the file as a *MultipartFile*. This object needs to be converted to a *DataSource* to be added to the email as a *MimeMultipart*.
+
+On the next code snippet, the *attachment* object is the *MultipartFile* we received on the POST request body.
+
+```java
+Multipart multipart = new MimeMultipart();
+
+MimeBodyPart mimeBodyPart = new MimeBodyPart();
+
+mimeBodyPart.setContent(bodyText, "text/plain");
+
+multipart.addBodyPart(mimeBodyPart);
+
+mimeBodyPart = new MimeBodyPart();
+
+DataSource ds = new ByteArrayDataSource(attachment.getBytes(), attachment.getContentType());
+mimeBodyPart.setDataHandler(new DataHandler(ds));
+mimeBodyPart.setFileName(attachment.getOriginalFilename());
+
+multipart.addBodyPart(mimeBodyPart);
+
+email.setContent(multipart);
+```
+
+
+#### Test demo endpoint.
+
+In order to test the source code, you can do a POST request as shown in the next screenshot. 
+
+![screenshot13](./images/13_doc_image.png)
+
+Keep in mind that in the provided demo, the sender and recipient emails are defined in the environment variables (or directly in application.yaml file for testing purposes).

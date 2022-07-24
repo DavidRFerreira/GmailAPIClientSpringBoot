@@ -6,6 +6,14 @@ Secondly, let's remember that our goal is to require that the sender account aut
 
 We know explain how to achieve both things step-by-step.
 
+## Table of Contents.
+
+1. [Creating a project in Google Cloud Console and enable Gmail API](#step1)
+2. [Create an OAuth Credential for you Application to Access Google APIs](#step2)
+3. [## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token](#step3)
+
+
+<a name="step1"/>
 
 ## Creating a project in Google Cloud Console and enable Gmail API
 
@@ -34,12 +42,15 @@ We know explain how to achieve both things step-by-step.
 You have created a project in Google Cloud and enabled the Gmail API for that project.
 
 
+<a name="step2"/>
+
 ## Create an OAuth Credential for you Application to Access Google APIs
 
 Still on [Google Cloud console](https://console.cloud.google.com/) on your browser.
 
 10. On the left-side menu press "OAuth Consent Screen".
 11. You can select "Internal" if you are a part of an organization or "External" if not. Then press "Create" button.
+
 ![screenshot5](./images/05_doc_image.png)
 
 12. Fill the form with your application's information and then press "Save and Continue" (only the first form screen is important). 
@@ -61,6 +72,7 @@ Still on [Google Cloud console](https://console.cloud.google.com/) on your brows
 
 On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is created with an associated **Client ID** and **Client Secret**. Your application is going to need them in order to access Google's APIs.
 
+<a name="step3"/>
 
 ## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token
 
