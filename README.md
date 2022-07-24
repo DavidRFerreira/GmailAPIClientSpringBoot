@@ -12,6 +12,22 @@ This tutorial presents how to use the Gmail API with an OAuth Credential requiri
 - Integrate Google's Gmail API with your Java Spring Boot own API in order to send emails with attachments (for example, a pdf file). 
 
 
+## Table of Contents.
+
+1. [Use Case Example](#step1)
+2. [Tutorial](#step2)
+    1. [Creating OAuth Credential and Refresh Token for Gmail Account](#step3)
+    2. [Adding Credentials as Environment Variables in IntelliJ](#step4)
+    3. [Implementation](#step5)
+        1. [Create OAuth Credential through token refresh](#step6)
+            1. [Alternative ways to create Credential object](#step7)
+        2. [Add a Java MultipartFile object as an email attachment](#step8)
+        3. [Test demo endpoint](#step9)
+5. [References](#step10)
+
+
+<a name="step1"/>
+
 ## Use Case Example
 
 [Google's Gmail API](https://developers.google.com/gmail/api) lets you view and manage your Gmail inbox and supports features like reading and sending emails, manage drafts and attachments and some others. 
@@ -28,11 +44,18 @@ This could be achieved with the many SMTP providers available but the majority o
 
 The source code on this repository shows an API with a single endpoint to submit a contact form with a subject, a description and a file. Then, an email is sent from a previously defined gmail account containing that subject, description and the file as an attachment. The recipient address in this example is also defined in the environment's variable but it can be defined at runtime (for example, an email address specified by the user on the API request).
 
+<a name="step2"/>
+
 ## Tutorial
+
+
+<a name="step3"/>
 
 ### Creating OAuth Credential and Refresh Token for Gmail Account
 
 For a step-by-step tutorial on how to create a Google Cloud project and how to create an OAuth Credential and a refresh token for the sender Gmail account refer to this [documentation](./docs/credentials.md).
+
+<a name="step4"/>
 
 ### Adding Credentials as Environment Variables in IntelliJ
 
@@ -48,6 +71,10 @@ GOOGLE_CLIENT_ID=XXXXXXX;GOOGLE_CLIENT_SECRET=XXXXXXX;GOOGLE_REFRESH_TOKEN=XXXXX
 
 But depending on the use case, the recipient email address *(TO_EMAIL)* can be specified during run-time having no need to store it on the environment variables. 
 
+![screenshot14](.docs/images/14_doc_image.png)
+
+
+<a name="step5"/>
 
 ### Implementation
 
@@ -55,6 +82,7 @@ The source code contains an *POST* endpoint in order to submit a subject (*Strin
 
 On this section, some important parts of the implementation are addressed. Please, keep in mind that the code snippets presented are not completed (consult the source code for the complete version).
 
+<a name="step6"/>
 
 #### Create OAuth Credential through token refresh
 
@@ -102,7 +130,9 @@ return new Credential(BearerToken.authorizationHeaderAccessMethod()).setFromToke
 
 This is how you can make sure you always have a valid access token and how you can authenticate the account in order to send emails without requiring account owner action.
 
-##### Alternative ways to create Credential object.
+<a name="step7"/>
+
+##### Alternative ways to create Credential object
 
 **Alternative 1**
 
@@ -165,7 +195,9 @@ Credential credential = new GoogleCredential().Builder()
 ```
 
 
-#### Add a Java MultipartFile object as an email attachment. 
+<a name="step8"/>
+
+#### Add a Java MultipartFile object as an email attachment
 
 In the provided example, the API received the file as a *MultipartFile*. This object needs to be converted to a *DataSource* to be added to the email as a *MimeMultipart*.
 
@@ -191,11 +223,20 @@ multipart.addBodyPart(mimeBodyPart);
 email.setContent(multipart);
 ```
 
+<a name="step9"/>
 
-#### Test demo endpoint.
+#### Test demo endpoint
 
 In order to test the source code, you can do a POST request as shown in the next screenshot. 
 
-![screenshot13](./images/13_doc_image.png)
+![screenshot13](.docs/images/13_doc_image.png)
 
 Keep in mind that in the provided demo, the sender and recipient emails are defined in the environment variables (or directly in application.yaml file for testing purposes).
+
+
+<a name="step10"/>
+
+## References
+
+[Gmail API main](https://developers.google.com/gmail/api)\
+[Gmail API Java Quickstart](https://developers.google.com/gmail/api/quickstart/java)
