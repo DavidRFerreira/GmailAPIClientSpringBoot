@@ -71,7 +71,7 @@ GOOGLE_CLIENT_ID=XXXXXXX;GOOGLE_CLIENT_SECRET=XXXXXXX;GOOGLE_REFRESH_TOKEN=XXXXX
 
 But depending on the use case, the recipient email address *(TO_EMAIL)* can be specified during run-time having no need to store it on the environment variables. 
 
-![screenshot14](.docs/images/14_doc_image.png)
+![screenshot14](./docs/images/14_doc_image.png)
 
 
 <a name="step5"/>
@@ -229,7 +229,7 @@ email.setContent(multipart);
 
 In order to test the source code, you can do a POST request as shown in the next screenshot. 
 
-![screenshot13](.docs/images/13_doc_image.png)
+![screenshot13](./docs/images/13_doc_image.png)
 
 Keep in mind that in the provided demo, the sender and recipient emails are defined in the environment variables (or directly in application.yaml file for testing purposes).
 
