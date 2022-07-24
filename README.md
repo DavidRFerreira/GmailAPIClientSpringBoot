@@ -15,14 +15,14 @@ This tutorial presents how to use the Gmail API with an OAuth Credential requiri
 ## Table of Contents.
 
 1. [Use Case Example](#step1)
-2. [Tutorial](#step2)
+2. [Setting up Credentials and Tokens](#step2)
     1. [Creating OAuth Credential and Refresh Token for Gmail Account](#step3)
     2. [Adding Credentials as Environment Variables in IntelliJ](#step4)
-    3. [Implementation](#step5)
-        1. [Create OAuth Credential through token refresh](#step6)
-            1. [Alternative ways to create Credential object](#step7)
-        2. [Add a Java MultipartFile object as an email attachment](#step8)
-        3. [Test demo endpoint](#step9)
+1. [Implementation](#step5)
+    1. [Create OAuth Credential through token refresh](#step6)
+        1. [Alternative ways to create Credential object](#step7)
+    2. [Add a Java MultipartFile object as an email attachment](#step8)
+    3. [Test demo endpoint](#step9)
 5. [References](#step10)
 
 
@@ -46,8 +46,7 @@ The source code on this repository shows an API with a single endpoint to submit
 
 <a name="step2"/>
 
-## Tutorial
-
+## Setting up Credentials and Tokens 
 
 <a name="step3"/>
 
@@ -76,7 +75,7 @@ But depending on the use case, the recipient email address *(TO_EMAIL)* can be s
 
 <a name="step5"/>
 
-### Implementation
+## Implementation
 
 The source code contains an *POST* endpoint in order to submit a subject (*String*), description (*String*) and a file (*MultipartFile*). When the endpoint is called, it triggers the Gmail API service to send an email from and to a specified emails address, sending the file as an attachment.
 
@@ -84,7 +83,7 @@ On this section, some important parts of the implementation are addressed. Pleas
 
 <a name="step6"/>
 
-#### Create OAuth Credential through token refresh
+### Create OAuth Credential through token refresh
 
 In order to create a Gmail service instance you need an OAuth credential and the sender Gmail's access token to authenticate your application and your account, respectively, with the Gmail API. 
 
@@ -132,7 +131,7 @@ This is how you can make sure you always have a valid access token and how you c
 
 <a name="step7"/>
 
-##### Alternative ways to create Credential object
+#### Alternative ways to create Credential object
 
 **Alternative 1**
 
@@ -197,7 +196,7 @@ Credential credential = new GoogleCredential().Builder()
 
 <a name="step8"/>
 
-#### Add a Java MultipartFile object as an email attachment
+### Add a Java MultipartFile object as an email attachment
 
 In the provided example, the API received the file as a *MultipartFile*. This object needs to be converted to a *DataSource* to be added to the email as a *MimeMultipart*.
 
@@ -225,7 +224,7 @@ email.setContent(multipart);
 
 <a name="step9"/>
 
-#### Test demo endpoint
+### Test demo endpoint
 
 In order to test the source code, you can do a POST request as shown in the next screenshot. 
 
