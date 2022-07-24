@@ -123,7 +123,7 @@ GoogleTokenResponse tokenResponse = restTemplate.postForObject(
 This *tokenResponse* can then be used to create a Credential object.
 
 ```java
-return new Credential(BearerToken.authorizationHeaderAccessMethod()).setFromTokenResponse(
+Credential credential = new Credential(BearerToken.authorizationHeaderAccessMethod()).setFromTokenResponse(
     tokenResponse);
 ```
 
