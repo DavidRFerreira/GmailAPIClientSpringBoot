@@ -93,5 +93,5 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
  
  ![screenshot12](./images/12_doc_image.png)
 
-The **Refresh Token** is very important. It will allow the application to ask for a valid access token everytime it needs to send an email. This way the sender account's owner doesn't need to perform any action from now on in order to accept or login to his account. This is done in the background through an API request to retrieve an access token from the refresh token.
+The **Refresh Token** is very important. It will allow the application to ask for a valid access token everytime it needs to send an email. This way the sender account's owner doesn't need to perform any action from now on in order to accept or login to his account. This is done in the background through an API request to retrieve an *access token* from the *refresh token*.
 The Refresh Token is going to be valid forever unless the account owner removes Google's API permission to access his account.
