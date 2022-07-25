@@ -10,7 +10,7 @@ We know explain how to achieve both things step-by-step.
 
 1. [Creating a project in Google Cloud Console and enable Gmail API](#step1)
 2. [Create an OAuth Credential for you Application to Access Google APIs](#step2)
-3. [## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token](#step3)
+3. [Authorize Gmail API with sender gmail account and retrieve associated Refresh Token](#step3)
 
 
 <a name="step1"/>
