@@ -76,7 +76,7 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
 
 ## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token
 
-16. Open [Google OAuth Playground](2. https://developers.google.com/oauthplayground) on your browser.
+16. Open [Google OAuth Playground 2](https://developers.google.com/oauthplayground) on your browser.
 17. On the left-side menu slect the "Gmail API" and the actions you want to have access to.
 18. On the "Settings" icon in the top-right corner select the "Use your own OAuth Credentials" box. Then add the OAuth Client Id and OAuth Client secret you received on step 15). 
 19. Press "Authorize APIs" button.
