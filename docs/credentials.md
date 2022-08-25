@@ -2,7 +2,7 @@
 
 Firstly, in order to integrate the Gmail API with your application you need to create an associated project in [Google Cloud console](https://console.cloud.google.com/) in order to enable the Gmail API and that way retrieve a Google Client ID and a Client Secret.
 
-Secondly, let's remember that our goal is to require that the sender account authorizes a single time the use of the Gmail API for its account. We don't want for example to display a prompt to login and authorize use each time an email needs to be sent. For that, we need just a single time that the sender Gmail account's owner log in and authorizes the Gmail API and that way we retrieve a refresh token. With this refresh token we can always make sure we have a valid access token each time we want to send an email without requiring any sender account's owner action. This Gmail API authorization and the refresh token retrievel is done through the [Google Developers OAuth Playground](https://developers.google.com/oauthplayground/).
+Secondly, let's remember that our goal is to require from the sender account a single-time-only authorization action to use of the Gmail API for his account. We don't want for example to display a prompt to login and authorize use each time an email needs to be sent. But we need that the sender Gmail account's owner logs in and authorizes the Gmail API a single-time so that we can retrieve a refresh token. With this refresh token we can make sure that we have a valid access token each time we want to send an email without requiring any sender account's owner action. This Gmail API authorization and the refresh token retrievel is done through the [Google Developers OAuth Playground](https://developers.google.com/oauthplayground/).
 
 We know explain how to achieve both things step-by-step.
 
@@ -10,7 +10,7 @@ We know explain how to achieve both things step-by-step.
 
 1. [Creating a project in Google Cloud Console and enable Gmail API](#step1)
 2. [Create an OAuth Credential for you Application to Access Google APIs](#step2)
-3. [## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token](#step3)
+3. [Authorize Gmail API with sender gmail account and retrieve associated Refresh Token](#step3)
 
 
 <a name="step1"/>
@@ -76,7 +76,7 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
 
 ## Authorize Gmail API with sender gmail account and retrieve associated Refresh Token
 
-16. Open [Google OAuth Playground](2. https://developers.google.com/oauthplayground) on your browser.
+16. Open [Google OAuth Playground 2](https://developers.google.com/oauthplayground) on your browser.
 17. On the left-side menu slect the "Gmail API" and the actions you want to have access to.
 18. On the "Settings" icon in the top-right corner select the "Use your own OAuth Credentials" box. Then add the OAuth Client Id and OAuth Client secret you received on step 15). 
 19. Press "Authorize APIs" button.
@@ -93,5 +93,5 @@ On "Create OAUth client ID" by pressing "Create" button, an OAuth Credential is 
  
  ![screenshot12](./images/12_doc_image.png)
 
-The **Refresh Token** is very important. It will allow the application to ask for a valid access token everytime it needs to send an email. This way the sender account's owner doesn't need to perform any action from now on in order to accept or login to his account. This is done in the background through an API request to retrieve an access token from the refresh token.
+The **Refresh Token** is very important. It will allow the application to ask for a valid access token everytime it needs to send an email. This way the sender account's owner doesn't need to perform any action from now on in order to accept or login to his account. This is done in the background through an API request to retrieve an *access token* from the *refresh token*.
 The Refresh Token is going to be valid forever unless the account owner removes Google's API permission to access his account.
