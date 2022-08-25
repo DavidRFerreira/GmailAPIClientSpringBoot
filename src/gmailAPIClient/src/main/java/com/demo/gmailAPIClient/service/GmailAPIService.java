@@ -11,6 +11,9 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
+
+import lombok.SneakyThrows;
+
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -51,17 +54,10 @@ public class GmailAPIService {
   @Value("${spring.google.to-email}")
   private String toEmail;
 
+  @SneakyThrows
   public GmailAPIService() {
 
-    try {
-
-      this.httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-
-    } catch (Exception e) {
-
-      e.printStackTrace();
-
-    }
+    this.httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
     this.gmailCredential = new GmailCredential(
       clientId,
@@ -157,7 +153,7 @@ public class GmailAPIService {
 
       e.printStackTrace();
 
-      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
         "Not able to process request");
 
     }
@@ -187,9 +183,7 @@ public class GmailAPIService {
 
     } catch (Exception e) {
 
-      e.printStackTrace();
-
-      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
         "Not able to process request.");
 
     }
@@ -233,7 +227,7 @@ public class GmailAPIService {
 
       e.printStackTrace();
 
-      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
         "Not able to process request.");
 
     }

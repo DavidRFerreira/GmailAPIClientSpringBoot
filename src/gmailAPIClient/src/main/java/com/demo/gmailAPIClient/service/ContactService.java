@@ -21,18 +21,14 @@ public class ContactService {
 
     try {
 
-      boolean success = gmailAPIService.sendMessage(
+      gmailAPIService.sendMessage(
         subject,
         description,
         file
       );
 
-      if (!success) {
-        throw new Exception();
-      }
-
-    } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+    } catch (MessagingException | IOException e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
         "Not able to process request.");
     }
 

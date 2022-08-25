@@ -34,7 +34,7 @@ This tutorial presents how to use the Gmail API with an OAuth Credential requiri
 
 This repository and its source code proposes a particular use for this API. Our goal is to use the Gmail API in order to send emails from a specific email account to some other email address. Examples of this use includes:
 
-- Having a specific gmail account from where account confirmation emails are sent to a new user registering in our app. In this case, we send email from an admin-example@gmail.com account to the user's email.
+- Having a specific gmail account from where account confirmation emails are sent to a new user registering in our app. In this case, we send email from an admin-examplew@gmail.com account to the user's email.
 - Having a contact form in our website where users can submit requests. In this case, we can send an email from a fixed account (admin-example@gmail.com) to the department's email that is going to handle the request.
 - Sending marketing emails.
 
